@@ -1,6 +1,7 @@
 "use client";
 
 import { Clock3, MapPin, Phone } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { useLanguage } from "@/context/LanguageProvider";
 import { restaurantInfo } from "@/data/restaurant";
 import { Reveal } from "@/components/ui/Reveal";
@@ -8,7 +9,14 @@ import { SectionLabel } from "@/components/ui/SectionLabel";
 
 export function RestaurantInfo() {
   const { t } = useLanguage();
-  const items = [
+  const items: Array<{
+    icon: LucideIcon;
+    label: string;
+    primary: string;
+    primaryHref?: string;
+    secondary?: string;
+    secondaryHref?: string;
+  }> = [
     { icon: Clock3, label: t.info.hours, primary: t.info.hoursValue },
     { icon: MapPin, label: t.info.location, primary: restaurantInfo.address, secondary: t.info.maps, secondaryHref: restaurantInfo.googleMapsUrl },
     { icon: Phone, label: t.info.contact, primary: restaurantInfo.phone, primaryHref: restaurantInfo.phoneHref },

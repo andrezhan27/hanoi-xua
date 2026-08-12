@@ -1,6 +1,6 @@
 # Hà Nội Xưa
 
-Bilingual single-page restaurant website for Hà Nội Xưa in Lisbon. The site uses a warm editorial design, real restaurant photography, a responsive gallery, Portuguese/English content, and accessible motion.
+Bilingual restaurant website for Hà Nội Xưa in Lisbon, built with the official Next.js App Router. The site uses a warm editorial design, real restaurant photography, a responsive gallery, Portuguese/English content, and accessible motion.
 
 ## Run locally
 

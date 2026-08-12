@@ -1,17 +1,75 @@
 import assert from "node:assert/strict";
+import { spawn } from "node:child_process";
 import { access, readFile } from "node:fs/promises";
-import test from "node:test";
+import { createServer } from "node:net";
+import { after, before, test } from "node:test";
+import { setTimeout as delay } from "node:timers/promises";
+
+let nextServer;
+let origin;
+
+before(async () => {
+  const port = await availablePort();
+  origin = `http://127.0.0.1:${port}`;
+
+  nextServer = spawn(
+    process.execPath,
+    ["node_modules/next/dist/bin/next", "start", "--hostname", "127.0.0.1", "--port", String(port)],
+    {
+      cwd: new URL("..", import.meta.url),
+      env: { ...process.env, NODE_ENV: "production" },
+      stdio: ["ignore", "pipe", "pipe"],
+    },
+  );
+
+  let serverOutput = "";
+  nextServer.stdout.on("data", (chunk) => {
+    serverOutput += chunk;
+  });
+  nextServer.stderr.on("data", (chunk) => {
+    serverOutput += chunk;
+  });
+
+  for (let attempt = 0; attempt < 100; attempt += 1) {
+    if (nextServer.exitCode !== null) {
+      throw new Error(`Next.js exited before it became ready:\n${serverOutput}`);
+    }
+
+    try {
+      const response = await fetch(origin);
+      if (response.ok) return;
+    } catch {
+      // The server is still starting.
+    }
+
+    await delay(100);
+  }
+
+  throw new Error(`Next.js did not become ready:\n${serverOutput}`);
+});
+
+after(() => {
+  nextServer?.kill("SIGTERM");
+});
 
 async function render(pathname = "/") {
-  const workerUrl = new URL("../dist/server/index.js", import.meta.url);
-  workerUrl.searchParams.set("test", `${process.pid}-${Date.now()}`);
-  const { default: worker } = await import(workerUrl.href);
+  return fetch(new URL(pathname, origin), {
+    headers: { accept: "text/html" },
+  });
+}
 
-  return worker.fetch(
-    new Request(`http://localhost${pathname}`, { headers: { accept: "text/html" } }),
-    { ASSETS: { fetch: async () => new Response("Not found", { status: 404 }) } },
-    { waitUntil() {}, passThroughOnException() {} },
-  );
+function availablePort() {
+  return new Promise((resolve, reject) => {
+    const server = createServer();
+    server.on("error", reject);
+    server.listen(0, "127.0.0.1", () => {
+      const address = server.address();
+      server.close((error) => {
+        if (error) reject(error);
+        else resolve(address.port);
+      });
+    });
+  });
 }
 
 test("server-renders the Hà Nội Xưa landing page", async () => {
