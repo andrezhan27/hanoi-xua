@@ -29,4 +29,4 @@ No environment variables are required.
 - Dish names and image mapping: `data/dishes.ts`
 - Photography and logo assets: `public/images/`
 
-Unconfirmed address, phone, email, hours, reservation, maps, and social links are intentionally shown as placeholders or pending states. Replace them only with confirmed restaurant information.
+The restaurant address, phone, opening hours, reservation, maps, and social links are maintained in the data files above.

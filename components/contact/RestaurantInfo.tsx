@@ -1,7 +1,8 @@
 "use client";
 
-import { Clock3, Mail, MapPin, Phone } from "lucide-react";
+import { Clock3, MapPin, Phone } from "lucide-react";
 import { useLanguage } from "@/context/LanguageProvider";
+import { restaurantInfo } from "@/data/restaurant";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 
@@ -9,8 +10,8 @@ export function RestaurantInfo() {
   const { t } = useLanguage();
   const items = [
     { icon: Clock3, label: t.info.hours, primary: t.info.hoursValue },
-    { icon: MapPin, label: t.info.location, primary: t.info.addressValue, secondary: t.info.mapsPending },
-    { icon: Phone, label: t.info.contact, primary: t.info.phoneValue, secondary: t.info.emailValue, secondIcon: Mail },
+    { icon: MapPin, label: t.info.location, primary: restaurantInfo.address, secondary: t.info.maps, secondaryHref: restaurantInfo.googleMapsUrl },
+    { icon: Phone, label: t.info.contact, primary: restaurantInfo.phone, primaryHref: restaurantInfo.phoneHref },
   ];
 
   return (
@@ -27,8 +28,14 @@ export function RestaurantInfo() {
               <Reveal className="info-item" key={item.label} delay={index * 0.08}>
                 <Icon size={23} strokeWidth={1.5} />
                 <p className="info-item__label">{item.label}</p>
-                <p className="info-item__primary">{item.primary}</p>
-                {item.secondary && <p className="info-item__secondary">{item.secondary}</p>}
+                <p className="info-item__primary">
+                  {item.primaryHref ? <a href={item.primaryHref}>{item.primary}</a> : item.primary}
+                </p>
+                {item.secondary && (
+                  <p className="info-item__secondary">
+                    {item.secondaryHref ? <a href={item.secondaryHref} target="_blank" rel="noopener noreferrer">{item.secondary}</a> : item.secondary}
+                  </p>
+                )}
               </Reveal>
             );
           })}

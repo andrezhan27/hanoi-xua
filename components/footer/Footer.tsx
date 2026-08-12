@@ -2,6 +2,8 @@
 
 import { useLanguage } from "@/context/LanguageProvider";
 import { Logo } from "@/components/ui/Logo";
+import { restaurantInfo } from "@/data/restaurant";
+import { FaFacebookF, FaInstagram, FaTiktok } from "react-icons/fa6";
 
 export function Footer() {
   const { t } = useLanguage();
@@ -11,6 +13,11 @@ export function Footer() {
     [t.nav.story, "#story"],
     [t.nav.space, "#space"],
     [t.nav.contact, "#contact"],
+  ];
+  const socialLinks = [
+    { name: "Instagram", icon: FaInstagram, href: restaurantInfo.instagramUrl },
+    { name: "Facebook", icon: FaFacebookF, href: restaurantInfo.facebookUrl },
+    { name: "TikTok", icon: FaTiktok, href: restaurantInfo.tiktokUrl },
   ];
   return (
     <footer className="footer">
@@ -25,8 +32,13 @@ export function Footer() {
         </div>
         <div className="footer__column">
           <p className="footer__label">{t.footer.follow}</p>
-          <div className="social-pending" aria-label={t.footer.socialPending}><span>IG</span><span>FB</span></div>
-          <p className="footer__small">{t.footer.socialPending}</p>
+          <div className="social-links">
+            {socialLinks.map(({ name, icon: Icon, href }) => (
+              <a key={name} href={href} target="_blank" rel="noopener noreferrer" aria-label={name} title={name}>
+                <Icon aria-hidden="true" />
+              </a>
+            ))}
+          </div>
         </div>
       </div>
       <div className="container footer__bottom">

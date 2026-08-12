@@ -8,7 +8,7 @@ import { useLanguage } from "@/context/LanguageProvider";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 
-const gallery = ["/images/space-1.png", "/images/space-2.png", "/images/space-3.png", "/images/space-4.png"];
+const gallery = ["/images/space-1.webp", "/images/space-2.webp", "/images/space-3.webp", "/images/space-4.webp"];
 
 export function SpaceGallery() {
   const { t } = useLanguage();

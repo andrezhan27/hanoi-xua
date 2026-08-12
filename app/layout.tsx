@@ -33,13 +33,13 @@ export const metadata: Metadata = {
     locale: "pt_PT",
     alternateLocale: "en_GB",
     siteName: "Hà Nội Xưa",
-    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Hà Nội Xưa — Vietnamese flavours in Lisbon" }],
+    images: [{ url: "/og.jpg", width: 1200, height: 630, alt: "Hà Nội Xưa — Vietnamese flavours in Lisbon" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Hà Nội Xưa | Vietnamese Restaurant in Lisbon",
     description: "Vietnamese flavours inspired by Hanoi, served with warmth in Lisbon.",
-    images: ["/og.png"],
+    images: ["/og.jpg"],
   },
 };
 

@@ -47,7 +47,7 @@ export function Navbar() {
               </button>
             ))}
           </div>
-          <a className="nav-reserve" href="#reservation">{t.nav.reserve}<ArrowUpRight size={15} /></a>
+          <a className="nav-reserve" href="/reservation">{t.nav.reserve}<ArrowUpRight size={15} /></a>
           <button className="menu-button" onClick={() => setOpen(!open)} aria-label={open ? "Fechar menu" : "Abrir menu"} aria-expanded={open}>
             {open ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -58,9 +58,9 @@ export function Navbar() {
           <motion.nav
             className="mobile-menu"
             aria-label="Navegação móvel"
-            initial={reducedMotion ? false : { opacity: 0, y: -12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
+            initial={reducedMotion ? false : { y: -12 }}
+            animate={{ y: 0 }}
+            exit={{ y: -12 }}
             transition={{ duration: 0.28 }}
           >
             {links.map(([label, href], index) => (
@@ -73,7 +73,7 @@ export function Navbar() {
                 transition={{ delay: index * 0.04 }}
               >{label}<span>0{index + 1}</span></motion.a>
             ))}
-            <a className="mobile-menu__reserve" href="#reservation" onClick={() => setOpen(false)}>{t.nav.reserve}<ArrowUpRight size={18} /></a>
+            <a className="mobile-menu__reserve" href="/reservation" onClick={() => setOpen(false)}>{t.nav.reserve}<ArrowUpRight size={18} /></a>
           </motion.nav>
         )}
       </AnimatePresence>

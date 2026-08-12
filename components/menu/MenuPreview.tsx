@@ -19,7 +19,6 @@ export function MenuPreview() {
         <div className="dish-grid">
           {dishes.map((dish, index) => <DishCard key={dish.image} dish={dish} language={language} index={index} />)}
         </div>
-        <p className="menu-note">{t.menu.note}</p>
       </div>
     </section>
   );
